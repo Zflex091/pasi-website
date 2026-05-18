@@ -2510,6 +2510,173 @@ useEffect(() => {
   }
 
 }
+  /* =====================================
+   ADMIN CONTROLS
+===================================== */
+
+.adminControls {
+  position: relative;
+  z-index: 5;
+
+  max-width: 1280px;
+
+  margin: 40px auto 20px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 15px;
+
+  flex-wrap: wrap;
+}
+
+.adminControls button {
+  height: 54px;
+
+  padding: 0 24px;
+
+  border: none;
+  outline: none;
+
+  border-radius: 18px;
+
+  cursor: pointer;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(0,207,255,0.22),
+      rgba(0,207,255,0.08)
+    );
+
+  border: 1px solid rgba(0,207,255,0.35);
+
+  color: white;
+
+  font-size: 0.95rem;
+  font-weight: 900;
+
+  letter-spacing: 1px;
+
+  transition: 0.3s;
+
+  box-shadow:
+    0 0 25px rgba(0,207,255,0.15);
+}
+
+.adminControls button:hover {
+  transform: translateY(-3px);
+
+  box-shadow:
+    0 0 35px rgba(0,207,255,0.35);
+}
+
+.liveStatus {
+  padding: 14px 18px;
+
+  border-radius: 18px;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(0,255,120,0.14),
+      rgba(0,255,120,0.05)
+    );
+
+  border: 1px solid rgba(0,255,120,0.25);
+
+  color: #86efac;
+
+  font-size: 0.85rem;
+  font-weight: 800;
+
+  letter-spacing: 1px;
+
+  box-shadow:
+    0 0 25px rgba(0,255,120,0.08);
+}
+
+.removeBtn {
+  margin-top: 14px;
+
+  width: 100%;
+  height: 42px;
+
+  border: none;
+  outline: none;
+
+  border-radius: 14px;
+
+  cursor: pointer;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255,0,0,0.22),
+      rgba(255,0,0,0.08)
+    );
+
+  border: 1px solid rgba(255,0,0,0.3);
+
+  color: white;
+
+  font-size: 0.8rem;
+  font-weight: 900;
+
+  letter-spacing: 1px;
+
+  transition: 0.3s;
+}
+
+.removeBtn:hover {
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 0 25px rgba(255,0,0,0.28);
+}
+
+/* MOBILE */
+
+@media (max-width: 768px) {
+
+  .adminControls {
+    margin-top: 25px;
+
+    flex-direction: column;
+
+    align-items: stretch;
+  }
+
+  .adminControls button {
+    width: 100%;
+
+    height: 50px;
+
+    border-radius: 16px;
+
+    font-size: 0.82rem;
+  }
+
+  .liveStatus {
+    width: 100%;
+
+    text-align: center;
+
+    border-radius: 16px;
+
+    font-size: 0.75rem;
+  }
+
+  .removeBtn {
+    height: 38px;
+
+    border-radius: 12px;
+
+    font-size: 0.72rem;
+  }
+
+}
       `}</style>
       
     </main>
