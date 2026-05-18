@@ -82,6 +82,61 @@ export default function Home() {
 
     setParticles(generated);
   }, []);
+  const [timeLeft, setTimeLeft] = useState({
+  days: 0,
+  hours: 0,
+  minutes: 0,
+  seconds: 0,
+});
+
+useEffect(() => {
+  const updateTimer = () => {
+    const now = new Date();
+
+    const nextReset = new Date(now);
+
+    const day = now.getDay();
+
+    const daysUntilMonday =
+      day === 0 ? 1 : 8 - day;
+
+    nextReset.setDate(
+      now.getDate() + daysUntilMonday
+    );
+
+    nextReset.setHours(0, 0, 0, 0);
+
+    const diff =
+      nextReset.getTime() - now.getTime();
+
+    setTimeLeft({
+      days: Math.floor(
+        diff / (1000 * 60 * 60 * 24)
+      ),
+
+      hours: Math.floor(
+        (diff / (1000 * 60 * 60)) % 24
+      ),
+
+      minutes: Math.floor(
+        (diff / (1000 * 60)) % 60
+      ),
+
+      seconds: Math.floor(
+        (diff / 1000) % 60
+      ),
+    });
+  };
+
+  updateTimer();
+
+  const interval = setInterval(
+    updateTimer,
+    1000
+  );
+
+  return () => clearInterval(interval);
+}, []);
 
 
   return (
@@ -230,6 +285,45 @@ export default function Home() {
   <p className="subtitle">
     TOP WEEKLY WAGER LEADERS
   </p>
+
+  <div className="timerWrap">
+
+  <div className="timerCard">
+    <span>{timeLeft.days}</span>
+    <small>DAYS</small>
+  </div>
+
+  <div className="timerDivider">:</div>
+
+  <div className="timerCard">
+    <span>
+      {String(timeLeft.hours).padStart(2, "0")}
+    </span>
+
+    <small>HOURS</small>
+  </div>
+
+  <div className="timerDivider">:</div>
+
+  <div className="timerCard">
+    <span>
+      {String(timeLeft.minutes).padStart(2, "0")}
+    </span>
+
+    <small>MINUTES</small>
+  </div>
+
+  <div className="timerDivider">:</div>
+
+  <div className="timerCard">
+    <span>
+      {String(timeLeft.seconds).padStart(2, "0")}
+    </span>
+
+    <small>SECONDS</small>
+  </div>
+
+</div>
 
   {/* SOCIALS */}
 <div className="heroSocials">
@@ -1804,7 +1898,148 @@ export default function Home() {
     height: 300px;
   }
 }
+  /* TIMER */
+
+.timerWrap {
+  margin-top: 34px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 14px;
+
+  flex-wrap: wrap;
+
+  position: relative;
+  z-index: 5;
+}
+
+.timerCard {
+  min-width: 110px;
+
+  padding: 18px 16px;
+
+  border-radius: 24px;
+
+  position: relative;
+
+  overflow: hidden;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255,255,255,0.08),
+      rgba(255,255,255,0.03)
+    );
+
+  border: 1px solid rgba(255,255,255,0.08);
+
+  backdrop-filter: blur(20px);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  box-shadow:
+    0 0 25px rgba(0,207,255,0.12);
+}
+
+.timerCard::before {
+  content: "";
+
+  position: absolute;
+  inset: -180%;
+
+  background:
+    conic-gradient(
+      from 0deg,
+      transparent,
+      rgba(0,207,255,0.8),
+      transparent
+    );
+
+  animation:
+    spinBorder 5s linear infinite;
+
+  opacity: 0.7;
+}
+
+.timerCard::after {
+  content: "";
+
+  position: absolute;
+  inset: 2px;
+
+  border-radius: 22px;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(5,15,35,0.96),
+      rgba(0,0,0,0.96)
+    );
+}
+
+.timerCard span,
+.timerCard small {
+  position: relative;
+  z-index: 2;
+}
+
+.timerCard span {
+  font-size: 2.2rem;
+  font-weight: 900;
+
+  color: white;
+
+  text-shadow:
+    0 0 18px rgba(0,207,255,0.75);
+}
+
+.timerCard small {
+  margin-top: 6px;
+
+  font-size: 0.72rem;
+  font-weight: 900;
+
+  letter-spacing: 3px;
+
+  color: #67e8f9;
+}
+
+.timerDivider {
+  font-size: 2rem;
+  font-weight: 900;
+
+  color: #00cfff;
+
+  text-shadow:
+    0 0 18px rgba(0,207,255,0.8);
+}
+
+@media (max-width: 900px) {
+
+  .timerWrap {
+    gap: 8px;
+  }
+
+  .timerCard {
+    min-width: 82px;
+
+    padding: 14px 10px;
+  }
+
+  .timerCard span {
+    font-size: 1.5rem;
+  }
+
+  .timerDivider {
+    font-size: 1.2rem;
+  }
+}
       `}</style>
+      
     </main>
   );
 }
