@@ -2047,6 +2047,367 @@ useEffect(() => {
     font-size: 1.2rem;
   }
 }.tab::before {
+/* ========================================
+   MOBILE RESPONSIVE FIXES
+======================================== */
+
+@media (max-width: 768px) {
+
+  .page {
+    padding-left: 14px;
+    padding-right: 14px;
+    padding-bottom: 80px;
+  }
+
+  /* NAVBAR */
+
+  .navbar {
+    padding-top: 20px;
+  }
+
+  .tabs {
+    width: 100%;
+
+    flex-direction: row;
+    justify-content: center;
+
+    gap: 12px;
+  }
+
+  .tab,
+  .important-tab {
+    width: 48%;
+    height: 72px;
+
+    border-radius: 20px;
+  }
+
+  .tab img {
+    width: 90px;
+  }
+
+  .important-tab {
+    font-size: 1rem;
+    letter-spacing: 1px;
+  }
+
+  /* HERO */
+
+  .hero {
+    margin-top: 40px;
+    padding: 0 5px;
+  }
+
+  .title {
+    font-size: 2.1rem;
+    line-height: 1.1;
+
+    text-align: center;
+  }
+
+  .subtitle {
+    margin-top: 14px;
+
+    font-size: 0.78rem;
+
+    letter-spacing: 2px;
+
+    padding: 0 10px;
+
+    line-height: 1.5;
+  }
+
+  /* TIMER */
+
+  .timerWrap {
+    margin-top: 24px;
+
+    gap: 6px;
+  }
+
+  .timerCard {
+    min-width: 70px;
+
+    padding: 10px 8px;
+
+    border-radius: 18px;
+  }
+
+  .timerCard span {
+    font-size: 1.1rem;
+  }
+
+  .timerCard small {
+    font-size: 0.52rem;
+
+    letter-spacing: 1px;
+  }
+
+  .timerDivider {
+    font-size: 1rem;
+  }
+
+  /* SOCIALS */
+
+  .heroSocials {
+    margin-top: 26px;
+
+    gap: 12px;
+  }
+
+  .heroSocials a {
+    width: 62px;
+    height: 62px;
+
+    border-radius: 18px;
+  }
+
+  .heroSocials img {
+    width: 28px;
+    height: 28px;
+  }
+
+  /* PODIUM */
+
+  .podium {
+    margin-top: 40px;
+
+    gap: 18px;
+
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .first,
+  .second,
+  .third {
+    width: 100%;
+    min-height: auto;
+  }
+
+  .podiumContent {
+    padding: 24px 18px;
+  }
+
+  .rank {
+    font-size: 2.5rem;
+  }
+
+  .player-name {
+    margin-top: 10px;
+
+    font-size: 1.5rem;
+
+    word-break: break-word;
+  }
+
+  .wager {
+    margin-top: 22px;
+
+    font-size: 0.9rem;
+  }
+
+  .amount {
+    margin-top: 10px;
+
+    font-size: 1.2rem;
+
+    gap: 8px;
+
+    flex-wrap: wrap;
+  }
+
+  .amount img {
+    width: 22px;
+  }
+
+  .prize {
+    margin-top: 30px;
+
+    font-size: 2.3rem;
+
+    gap: 8px;
+
+    flex-wrap: wrap;
+  }
+
+  .prize img {
+    width: 28px;
+  }
+
+  /* LEADERBOARD */
+
+  .leaderboard {
+    margin-top: 45px;
+
+    border-radius: 22px;
+  }
+
+  .leaderTitle {
+    padding: 20px;
+
+    font-size: 1.2rem;
+
+    letter-spacing: 2px;
+  }
+
+  .leaderRow {
+    display: flex;
+    flex-direction: column;
+
+    gap: 14px;
+
+    padding: 18px 14px;
+
+    text-align: center;
+  }
+
+  .left,
+  .middle,
+  .right {
+    width: 100%;
+
+    justify-content: center;
+
+    flex-wrap: wrap;
+  }
+
+  .number {
+    font-size: 1rem;
+  }
+
+  .name {
+    font-size: 1rem;
+
+    word-break: break-word;
+  }
+
+  .wagerLabel,
+  .wagerAmount,
+  .right {
+    font-size: 0.95rem;
+  }
+
+  .middle img,
+  .right img {
+    width: 18px;
+  }
+
+  /* IMPORTANT PAGE */
+
+  .importantPage {
+    margin-top: 40px;
+  }
+
+  .importantMainTitle {
+    font-size: 3rem;
+
+    letter-spacing: 4px;
+
+    text-align: center;
+  }
+
+  .importantSubtitle {
+    margin-top: 12px;
+
+    font-size: 0.7rem;
+
+    letter-spacing: 1px;
+
+    text-align: center;
+
+    line-height: 1.5;
+
+    padding: 0 20px;
+  }
+
+  .importantGlow {
+    width: 240px;
+    height: 240px;
+  }
+
+  .rulesSection {
+    margin-top: 50px;
+  }
+
+  .rulesTitle {
+    font-size: 2rem;
+
+    letter-spacing: 3px;
+  }
+
+  .rulesGrid {
+    margin-top: 25px;
+
+    gap: 14px;
+  }
+
+  .ruleCard {
+    flex-direction: column;
+
+    text-align: center;
+
+    padding: 20px 16px;
+
+    gap: 14px;
+
+    border-radius: 22px;
+  }
+
+  .ruleCard span {
+    min-width: 58px;
+    height: 58px;
+
+    font-size: 1.2rem;
+
+    border-radius: 16px;
+  }
+
+  .ruleCard p {
+    font-size: 0.95rem;
+
+    line-height: 1.5;
+  }
+
+  /* BACKGROUND COINS */
+
+  .floatingCoin {
+    opacity: 0.03 !important;
+  }
+}
+
+@media (max-width: 420px) {
+
+  .title {
+    font-size: 1.7rem;
+  }
+
+  .subtitle {
+    font-size: 0.65rem;
+  }
+
+  .timerCard {
+    min-width: 60px;
+  }
+
+  .timerCard span {
+    font-size: 0.95rem;
+  }
+
+  .heroSocials a {
+    width: 54px;
+    height: 54px;
+  }
+
+  .heroSocials img {
+    width: 24px;
+    height: 24px;
+  }
+
+  .importantMainTitle {
+    font-size: 2.3rem;
+  }
+}
       `}</style>
       
     </main>
