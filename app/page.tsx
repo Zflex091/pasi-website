@@ -15,6 +15,9 @@ export default function Home() {
   const [selected, setSelected] =
     useState("GAMBLIT");
 
+    const [lastUpdated, setLastUpdated] =
+  useState("JUST NOW");
+
     const HERO_TITLE =
   "GAMBLIT LEADERBOARD";
 
@@ -48,7 +51,14 @@ const LEADERBOARD_TITLE =
       ...doc.data(),
     }));
 
-    setPlayers(data as any[]);
+   setPlayers(data as any[]);
+
+setLastUpdated(
+  new Date().toLocaleTimeString([], {
+    hour: "2-digit",
+    minute: "2-digit",
+  })
+);
   });
 
   return () => unsub();
@@ -74,6 +84,30 @@ const LEADERBOARD_TITLE =
     prize: "0",
   },
 ]);
+const addPlayer = () => {
+  const nextRank = players.length + 1;
+
+  setPlayers([
+    ...players,
+    {
+      rank: nextRank,
+      name: "NEW PLAYER",
+      wager: "0",
+      prize: "0",
+    },
+  ]);
+};
+
+const removePlayer = (rank: number) => {
+  const updated = players
+    .filter((p) => p.rank !== rank)
+    .map((p, index) => ({
+      ...p,
+      rank: index + 1,
+    }));
+
+  setPlayers(updated);
+};
 
 
   useEffect(() => {
@@ -480,7 +514,18 @@ useEffect(() => {
               </div>
             </div>
           </section>
+{/* ADMIN CONTROLS */}
+<div className="adminControls">
 
+  <button onClick={addPlayer}>
+    + ADD PLAYER
+  </button>
+
+  <div className="liveStatus">
+    LIVE • UPDATED {lastUpdated}
+  </div>
+
+</div>
           {/* LEADERBOARD */}
           <section className="leaderboard">
             <div className="leaderTitle">
@@ -488,45 +533,60 @@ useEffect(() => {
 </div>
 
             {players.map((player) => (
-              <div
-                className="leaderRow"
-                key={player.rank}
-              >
-                <div className="left">
-                  <span className="number">
-                    #{player.rank}
-                  </span>
+  <div
+    className="leaderRow"
+    key={player.rank}
+  >
 
-                  <span className="name">
-                    {player.name}
-                  </span>
-                </div>
+    {/* LEFT */}
+    <div className="left">
+      <span className="number">
+        #{player.rank}
+      </span>
 
-                <div className="middle">
-                  <span className="wagerLabel">
-                    WAGERED :
-                  </span>
+      <span className="name">
+        {player.name}
+      </span>
+    </div>
 
-                  <span className="wagerAmount">
-                    {player.wager}
-                  </span>
+    {/* MIDDLE */}
+    <div className="middle">
+      <span className="wagerLabel">
+        WAGERED :
+      </span>
 
-                  <img
-                    src="/bgl.png.png"
-                    alt=""
-                  />
-                </div>
+      <span className="wagerAmount">
+        {player.wager}
+      </span>
 
-                <div className="right">
-                  Prize : {player.prize}
+      <img
+        src="/bgl.png.png"
+        alt=""
+      />
+    </div>
 
-                  <img
-                    src="/bgl.png.png"
-                    alt=""
-                  />
-                </div>
-              </div>
-            ))}
+    {/* RIGHT */}
+    <div className="right">
+      Prize : {player.prize}
+
+      <img
+        src="/bgl.png.png"
+        alt=""
+      />
+    </div>
+
+    {/* REMOVE BUTTON */}
+    <button
+      className="removeBtn"
+      onClick={() =>
+        removePlayer(player.rank)
+      }
+    >
+      REMOVE
+    </button>
+
+  </div>
+))}
           </section>
 
           {/* SOCIALS */}
