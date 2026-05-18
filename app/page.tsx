@@ -15,6 +15,15 @@ export default function Home() {
   const [selected, setSelected] =
     useState("GAMBLIT");
 
+    const HERO_TITLE =
+  "GAMBLIT LEADERBOARD";
+
+const HERO_SUBTITLE =
+  "TOP WEEKLY WAGER LEADERS";
+
+const LEADERBOARD_TITLE =
+  "FULL LEADERBOARD";
+
   const [particles, setParticles] =
     useState<
       {
@@ -278,13 +287,13 @@ useEffect(() => {
           {/* HERO */}
           {/* HERO */}
 <section className="hero">
-  <h1 className="title">
-    GAMBLIT LEADERBOARD
-  </h1>
+ <h1 className="title">
+  {HERO_TITLE}
+</h1>
 
   <p className="subtitle">
-    TOP WEEKLY WAGER LEADERS
-  </p>
+  {HERO_SUBTITLE}
+</p>
 
   <div className="timerWrap">
 
@@ -475,8 +484,8 @@ useEffect(() => {
           {/* LEADERBOARD */}
           <section className="leaderboard">
             <div className="leaderTitle">
-              FULL LEADERBOARD
-            </div>
+  {LEADERBOARD_TITLE}
+</div>
 
             {players.map((player) => (
               <div
@@ -2047,164 +2056,200 @@ useEffect(() => {
     font-size: 1.2rem;
   }
 }.tab::before {
-/* ========================================
-   MOBILE RESPONSIVE FIXES
-======================================== */
+/* =========================================
+   ULTRA MOBILE REDESIGN
+========================================= */
 
 @media (max-width: 768px) {
 
+  body {
+    overflow-x: hidden;
+  }
+
   .page {
-    padding-left: 14px;
-    padding-right: 14px;
-    padding-bottom: 80px;
+    padding-left: 12px;
+    padding-right: 12px;
+    padding-bottom: 60px;
   }
 
   /* NAVBAR */
 
   .navbar {
-    padding-top: 20px;
+    padding-top: 16px;
   }
 
   .tabs {
     width: 100%;
 
-    flex-direction: row;
-    justify-content: center;
+    display: grid;
 
-    gap: 12px;
+    grid-template-columns: 1fr 1fr;
+
+    gap: 10px;
   }
 
   .tab,
   .important-tab {
-    width: 48%;
-    height: 72px;
+    width: 100%;
+    height: 64px;
 
-    border-radius: 20px;
+    border-radius: 18px;
   }
 
   .tab img {
-    width: 90px;
+    width: 82px;
   }
 
   .important-tab {
-    font-size: 1rem;
+    font-size: 0.95rem;
+
     letter-spacing: 1px;
   }
 
   /* HERO */
 
   .hero {
-    margin-top: 40px;
-    padding: 0 5px;
+    margin-top: 30px;
   }
 
   .title {
-    font-size: 2.1rem;
-    line-height: 1.1;
+    font-size: 2rem;
 
-    text-align: center;
+    line-height: 1.05;
+
+    letter-spacing: -1px;
+
+    padding: 0 10px;
   }
 
   .subtitle {
     margin-top: 14px;
 
-    font-size: 0.78rem;
+    font-size: 0.72rem;
 
     letter-spacing: 2px;
 
-    padding: 0 10px;
-
     line-height: 1.5;
+
+    padding: 0 15px;
   }
 
   /* TIMER */
 
   .timerWrap {
-    margin-top: 24px;
+    margin-top: 22px;
+
+    display: grid;
+
+    grid-template-columns:
+      repeat(4, 1fr);
 
     gap: 6px;
+
+    width: 100%;
   }
 
   .timerCard {
-    min-width: 70px;
+    min-width: unset;
 
-    padding: 10px 8px;
+    width: 100%;
 
-    border-radius: 18px;
+    padding: 12px 6px;
+
+    border-radius: 16px;
   }
 
   .timerCard span {
-    font-size: 1.1rem;
+    font-size: 1rem;
   }
 
   .timerCard small {
-    font-size: 0.52rem;
+    font-size: 0.45rem;
 
     letter-spacing: 1px;
   }
 
   .timerDivider {
-    font-size: 1rem;
+    display: none;
   }
 
   /* SOCIALS */
 
   .heroSocials {
-    margin-top: 26px;
+    margin-top: 24px;
 
-    gap: 12px;
+    gap: 10px;
   }
 
   .heroSocials a {
-    width: 62px;
-    height: 62px;
+    width: 58px;
+    height: 58px;
 
-    border-radius: 18px;
+    border-radius: 16px;
   }
 
   .heroSocials img {
-    width: 28px;
-    height: 28px;
+    width: 26px;
+    height: 26px;
   }
 
   /* PODIUM */
 
   .podium {
-    margin-top: 40px;
+    margin-top: 35px;
+
+    display: flex;
+    flex-direction: column;
 
     gap: 18px;
+  }
 
-    flex-direction: column;
-    align-items: center;
+  .first {
+    order: 1;
+  }
+
+  .second {
+    order: 2;
+  }
+
+  .third {
+    order: 3;
   }
 
   .first,
   .second,
   .third {
     width: 100%;
-    min-height: auto;
+
+    min-height: unset;
+
+    border-radius: 24px;
   }
 
   .podiumContent {
-    padding: 24px 18px;
+    padding: 24px 16px;
   }
 
   .rank {
-    font-size: 2.5rem;
+    font-size: 2.2rem;
   }
 
   .player-name {
     margin-top: 10px;
 
-    font-size: 1.5rem;
+    font-size: 1.35rem;
+
+    line-height: 1.2;
 
     word-break: break-word;
   }
 
   .wager {
-    margin-top: 22px;
+    margin-top: 20px;
 
-    font-size: 0.9rem;
+    font-size: 0.78rem;
+
+    letter-spacing: 2px;
   }
 
   .amount {
@@ -2212,7 +2257,7 @@ useEffect(() => {
 
     font-size: 1.2rem;
 
-    gap: 8px;
+    gap: 6px;
 
     flex-wrap: wrap;
   }
@@ -2222,31 +2267,31 @@ useEffect(() => {
   }
 
   .prize {
-    margin-top: 30px;
+    margin-top: 26px;
 
-    font-size: 2.3rem;
+    font-size: 2rem;
 
-    gap: 8px;
+    gap: 6px;
 
     flex-wrap: wrap;
   }
 
   .prize img {
-    width: 28px;
+    width: 26px;
   }
 
   /* LEADERBOARD */
 
   .leaderboard {
-    margin-top: 45px;
+    margin-top: 35px;
 
-    border-radius: 22px;
+    border-radius: 20px;
   }
 
   .leaderTitle {
-    padding: 20px;
+    padding: 18px;
 
-    font-size: 1.2rem;
+    font-size: 1rem;
 
     letter-spacing: 2px;
   }
@@ -2255,11 +2300,11 @@ useEffect(() => {
     display: flex;
     flex-direction: column;
 
-    gap: 14px;
+    align-items: center;
 
-    padding: 18px 14px;
+    gap: 10px;
 
-    text-align: center;
+    padding: 16px 12px;
   }
 
   .left,
@@ -2269,11 +2314,13 @@ useEffect(() => {
 
     justify-content: center;
 
+    text-align: center;
+
     flex-wrap: wrap;
   }
 
   .number {
-    font-size: 1rem;
+    font-size: 0.95rem;
   }
 
   .name {
@@ -2285,24 +2332,24 @@ useEffect(() => {
   .wagerLabel,
   .wagerAmount,
   .right {
-    font-size: 0.95rem;
+    font-size: 0.85rem;
   }
 
   .middle img,
   .right img {
-    width: 18px;
+    width: 16px;
   }
 
   /* IMPORTANT PAGE */
 
-  .importantPage {
-    margin-top: 40px;
+  .importantHero {
+    margin-top: 35px;
   }
 
   .importantMainTitle {
-    font-size: 3rem;
+    font-size: 2.6rem;
 
-    letter-spacing: 4px;
+    letter-spacing: 3px;
 
     text-align: center;
   }
@@ -2310,36 +2357,36 @@ useEffect(() => {
   .importantSubtitle {
     margin-top: 12px;
 
-    font-size: 0.7rem;
+    font-size: 0.65rem;
 
     letter-spacing: 1px;
-
-    text-align: center;
 
     line-height: 1.5;
 
     padding: 0 20px;
+
+    text-align: center;
   }
 
   .importantGlow {
-    width: 240px;
-    height: 240px;
+    width: 220px;
+    height: 220px;
   }
 
   .rulesSection {
-    margin-top: 50px;
+    margin-top: 45px;
   }
 
   .rulesTitle {
-    font-size: 2rem;
+    font-size: 1.8rem;
 
-    letter-spacing: 3px;
+    letter-spacing: 2px;
   }
 
   .rulesGrid {
-    margin-top: 25px;
+    margin-top: 20px;
 
-    gap: 14px;
+    gap: 12px;
   }
 
   .ruleCard {
@@ -2347,66 +2394,61 @@ useEffect(() => {
 
     text-align: center;
 
-    padding: 20px 16px;
+    gap: 12px;
 
-    gap: 14px;
+    padding: 18px 14px;
 
-    border-radius: 22px;
+    border-radius: 20px;
   }
 
   .ruleCard span {
-    min-width: 58px;
-    height: 58px;
+    min-width: 52px;
+    height: 52px;
 
-    font-size: 1.2rem;
+    border-radius: 14px;
 
-    border-radius: 16px;
+    font-size: 1rem;
   }
 
   .ruleCard p {
-    font-size: 0.95rem;
+    font-size: 0.85rem;
 
     line-height: 1.5;
   }
 
-  /* BACKGROUND COINS */
+  /* FLOATING COINS */
 
   .floatingCoin {
-    opacity: 0.03 !important;
+    opacity: 0.025 !important;
   }
+
 }
+
+/* SMALL PHONES */
 
 @media (max-width: 420px) {
 
   .title {
-    font-size: 1.7rem;
+    font-size: 1.6rem;
   }
 
   .subtitle {
-    font-size: 0.65rem;
-  }
-
-  .timerCard {
-    min-width: 60px;
+    font-size: 0.6rem;
   }
 
   .timerCard span {
-    font-size: 0.95rem;
+    font-size: 0.9rem;
   }
 
   .heroSocials a {
-    width: 54px;
-    height: 54px;
-  }
-
-  .heroSocials img {
-    width: 24px;
-    height: 24px;
+    width: 52px;
+    height: 52px;
   }
 
   .importantMainTitle {
-    font-size: 2.3rem;
+    font-size: 2.1rem;
   }
+
 }
       `}</style>
       
