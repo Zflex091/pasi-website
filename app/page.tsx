@@ -639,27 +639,29 @@ useEffect(() => {
           overflow: hidden;
         }
 
-        .tab::before {
-          content: "";
+.tab::before {
+  content: "";
 
-          position: absolute;
-          inset: -200%;
+  position: absolute;
+  inset: 0;
 
-          background: conic-gradient(
-            from 0deg,
-            transparent 0deg,
-            transparent 310deg,
-            #00cfff 330deg,
-            #ffffff 340deg,
-            #00cfff 350deg,
-            transparent 360deg
-          );
+  border-radius: 28px;
 
-          animation:
-            spinBorder 4s linear infinite;
+  background:
+    radial-gradient(
+      circle,
+      rgba(0,207,255,0.22),
+      transparent 70%
+    );
 
-          opacity: 0;
-        }
+  opacity: 0;
+
+  transition: 0.35s;
+
+  filter: blur(18px);
+
+  z-index: 0;
+}
 
         .tab::after {
   content: "";
@@ -694,9 +696,16 @@ useEffect(() => {
           transform: translateY(-5px);
         }
 
-        .active::before {
-          opacity: 1;
-        }
+      .active {
+  border: 2px solid rgba(0,207,255,0.8);
+
+  box-shadow:
+    0 0 25px rgba(0,207,255,0.45),
+    0 0 80px rgba(0,207,255,0.22);
+}
+.active::before {
+  opacity: 1;
+}
 
         
         .important-active::before {
@@ -2037,7 +2046,7 @@ useEffect(() => {
   .timerDivider {
     font-size: 1.2rem;
   }
-}
+}.tab::before {
       `}</style>
       
     </main>
