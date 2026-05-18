@@ -178,23 +178,81 @@ async function logout() {
   await signOut(auth);
 }
 if (!user) {
+  return (
+    <main className="adminPage">
 
-  async function login() {
-  try {
-    await signInWithEmailAndPassword(
-      auth,
-      email,
-      password
-    );
-  } catch (err) {
-    alert(
-      "Wrong email or password"
-    );
-  }
-}
+      <div className="bgGlow"></div>
 
-async function logout() {
-  await signOut(auth);
+      <div className="loginWrap">
+
+        <div className="loginCard">
+
+          <div className="loginTop">
+
+            <div className="loginLogo">
+              G
+            </div>
+
+            <h1>
+              GAMBLIT ADMIN
+            </h1>
+
+            <p>
+              Secure leaderboard management
+            </p>
+
+          </div>
+
+          <div className="inputGroup">
+
+            <label>
+              EMAIL
+            </label>
+
+            <input
+              type="email"
+              placeholder="admin@email.com"
+              value={email}
+              onChange={(e) =>
+                setEmail(
+                  e.target.value
+                )
+              }
+            />
+
+          </div>
+
+          <div className="inputGroup">
+
+            <label>
+              PASSWORD
+            </label>
+
+            <input
+              type="password"
+              placeholder="••••••••"
+              value={password}
+              onChange={(e) =>
+                setPassword(
+                  e.target.value
+                )
+              }
+            />
+
+          </div>
+
+          <button
+            className="loginBtn"
+            onClick={login}
+          >
+            LOGIN
+          </button>
+
+        </div>
+
+      </div>
+    </main>
+  );
 }
   return (
     <main className="adminPage">
@@ -698,6 +756,189 @@ async function logout() {
             width: 100%;
           }
         }
+          .loginWrap {
+  min-height: 100vh;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  position: relative;
+  z-index: 2;
+}
+
+.loginCard {
+  width: 100%;
+  max-width: 480px;
+
+  padding: 45px;
+
+  border-radius: 32px;
+
+  position: relative;
+
+  overflow: hidden;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255,255,255,0.06),
+      rgba(255,255,255,0.03)
+    );
+
+  border: 1px solid
+    rgba(255,255,255,0.08);
+
+  backdrop-filter: blur(24px);
+
+  box-shadow:
+    0 0 60px rgba(0,207,255,0.12);
+}
+
+.loginCard::before {
+  content: "";
+
+  position: absolute;
+  inset: -180%;
+
+  background:
+    conic-gradient(
+      from 0deg,
+      transparent,
+      rgba(0,207,255,0.8),
+      transparent
+    );
+
+  animation:
+    spin 5s linear infinite;
+
+  opacity: 0.25;
+}
+
+.loginCard::after {
+  content: "";
+
+  position: absolute;
+  inset: 2px;
+
+  border-radius: 30px;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(5,15,35,0.98),
+      rgba(0,0,0,0.98)
+    );
+}
+
+.loginCard * {
+  position: relative;
+  z-index: 2;
+}
+
+.loginTop {
+  text-align: center;
+
+  margin-bottom: 35px;
+}
+
+.loginLogo {
+  width: 90px;
+  height: 90px;
+
+  margin: 0 auto 20px;
+
+  border-radius: 26px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 2.6rem;
+  font-weight: 900;
+
+  background:
+    linear-gradient(
+      180deg,
+      #00cfff,
+      #0077ff
+    );
+
+  box-shadow:
+    0 0 35px rgba(0,207,255,0.45);
+}
+
+.loginTop h1 {
+  margin: 0;
+
+  font-size: 2.4rem;
+  font-weight: 900;
+
+  background:
+    linear-gradient(
+      90deg,
+      #00cfff,
+      white
+    );
+
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.loginTop p {
+  margin-top: 12px;
+
+  color: #94a3b8;
+
+  font-size: 1rem;
+}
+
+.loginBtn {
+  width: 100%;
+
+  height: 64px;
+
+  margin-top: 10px;
+
+  border: none;
+
+  border-radius: 20px;
+
+  font-size: 1rem;
+  font-weight: 900;
+
+  background:
+    linear-gradient(
+      90deg,
+      #00cfff,
+      #0077ff
+    );
+
+  color: white;
+
+  cursor: pointer;
+
+  transition: 0.3s;
+}
+
+.loginBtn:hover {
+  transform: translateY(-4px);
+
+  box-shadow:
+    0 0 35px rgba(0,207,255,0.45);
+}
+
+@media (max-width: 600px) {
+
+  .loginCard {
+    padding: 28px;
+  }
+
+  .loginTop h1 {
+    font-size: 1.8rem;
+  }
+
+}
           .settingsCard {
   margin-bottom: 40px;
 
