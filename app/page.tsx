@@ -5,6 +5,7 @@ import {
   onSnapshot,
   query,
   orderBy,
+  doc,
 } from "firebase/firestore";
 
 import { db } from "./lib/firebase";
@@ -18,14 +19,14 @@ export default function Home() {
     const [lastUpdated, setLastUpdated] =
   useState("JUST NOW");
 
-    const HERO_TITLE =
-  "GAMBLIT LEADERBOARD";
+    const [heroTitle, setHeroTitle] =
+  useState("GAMBLIT LEADERBOARD");
 
-const HERO_SUBTITLE =
-  "TOP WEEKLY WAGER LEADERS";
+const [heroSubtitle, setHeroSubtitle] =
+  useState("TOP WEEKLY WAGER LEADERS");
 
-const LEADERBOARD_TITLE =
-  "FULL LEADERBOARD";
+const [leaderboardTitle, setLeaderboardTitle] =
+  useState("FULL LEADERBOARD");
 
   const [particles, setParticles] =
     useState<
@@ -39,29 +40,66 @@ const LEADERBOARD_TITLE =
       }[]
     >([]);
 
-    useEffect(() => {
+useEffect(() => {
   const q = query(
     collection(db, "leaderboard"),
     orderBy("rank", "asc")
   );
 
-  const unsub = onSnapshot(q, (snapshot) => {
-    const data = snapshot.docs.map((doc) => ({
-      id: doc.id,
-      ...doc.data(),
-    }));
+  const unsub = onSnapshot(
+    q,
+    (snapshot) => {
+      const data = snapshot.docs.map(
+        (doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        })
+      );
 
-   setPlayers(data as any[]);
+      setPlayers(data as any[]);
 
-setLastUpdated(
-  new Date().toLocaleTimeString([], {
-    hour: "2-digit",
-    minute: "2-digit",
-  })
-);
-  });
+      setLastUpdated(
+        new Date().toLocaleTimeString(
+          [],
+          {
+            hour: "2-digit",
+            minute: "2-digit",
+          }
+        )
+      );
+    }
+  );
 
-  return () => unsub();
+  const settingsUnsub =
+    onSnapshot(
+      doc(db, "settings", "texts"),
+      (docSnap) => {
+        if (docSnap.exists()) {
+          const data =
+            docSnap.data();
+
+          setHeroTitle(
+            data.heroTitle ||
+              "GAMBLIT LEADERBOARD"
+          );
+
+          setHeroSubtitle(
+            data.heroSubtitle ||
+              "TOP WEEKLY WAGER LEADERS"
+          );
+
+          setLeaderboardTitle(
+            data.leaderboardTitle ||
+              "FULL LEADERBOARD"
+          );
+        }
+      }
+    );
+
+  return () => {
+    unsub();
+    settingsUnsub();
+  };
 }, []);
 
    const [players, setPlayers] = useState<any[]>([
@@ -84,30 +122,8 @@ setLastUpdated(
     prize: "0",
   },
 ]);
-const addPlayer = () => {
-  const nextRank = players.length + 1;
 
-  setPlayers([
-    ...players,
-    {
-      rank: nextRank,
-      name: "NEW PLAYER",
-      wager: "0",
-      prize: "0",
-    },
-  ]);
-};
 
-const removePlayer = (rank: number) => {
-  const updated = players
-    .filter((p) => p.rank !== rank)
-    .map((p, index) => ({
-      ...p,
-      rank: index + 1,
-    }));
-
-  setPlayers(updated);
-};
 
 
   useEffect(() => {
@@ -322,11 +338,11 @@ useEffect(() => {
           {/* HERO */}
 <section className="hero">
  <h1 className="title">
-  {HERO_TITLE}
+  {heroTitle}
 </h1>
 
   <p className="subtitle">
-  {HERO_SUBTITLE}
+  {heroSubtitle}
 </p>
 
   <div className="timerWrap">
@@ -514,22 +530,11 @@ useEffect(() => {
               </div>
             </div>
           </section>
-{/* ADMIN CONTROLS */}
-<div className="adminControls">
 
-  <button onClick={addPlayer}>
-    + ADD PLAYER
-  </button>
-
-  <div className="liveStatus">
-    LIVE • UPDATED {lastUpdated}
-  </div>
-
-</div>
           {/* LEADERBOARD */}
           <section className="leaderboard">
             <div className="leaderTitle">
-  {LEADERBOARD_TITLE}
+  {leaderboardTitle}
 </div>
 
             {players.map((player) => (
@@ -574,16 +579,6 @@ useEffect(() => {
         alt=""
       />
     </div>
-
-    {/* REMOVE BUTTON */}
-    <button
-      className="removeBtn"
-      onClick={() =>
-        removePlayer(player.rank)
-      }
-    >
-      REMOVE
-    </button>
 
   </div>
 ))}
@@ -2509,131 +2504,6 @@ useEffect(() => {
     font-size: 2.1rem;
   }
 
-}
-  /* =====================================
-   ADMIN CONTROLS
-===================================== */
-
-.adminControls {
-  position: relative;
-  z-index: 5;
-
-  max-width: 1280px;
-
-  margin: 40px auto 20px;
-
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-
-  gap: 15px;
-
-  flex-wrap: wrap;
-}
-
-.adminControls button {
-  height: 54px;
-
-  padding: 0 24px;
-
-  border: none;
-  outline: none;
-
-  border-radius: 18px;
-
-  cursor: pointer;
-
-  background:
-    linear-gradient(
-      180deg,
-      rgba(0,207,255,0.22),
-      rgba(0,207,255,0.08)
-    );
-
-  border: 1px solid rgba(0,207,255,0.35);
-
-  color: white;
-
-  font-size: 0.95rem;
-  font-weight: 900;
-
-  letter-spacing: 1px;
-
-  transition: 0.3s;
-
-  box-shadow:
-    0 0 25px rgba(0,207,255,0.15);
-}
-
-.adminControls button:hover {
-  transform: translateY(-3px);
-
-  box-shadow:
-    0 0 35px rgba(0,207,255,0.35);
-}
-
-.liveStatus {
-  padding: 14px 18px;
-
-  border-radius: 18px;
-
-  background:
-    linear-gradient(
-      180deg,
-      rgba(0,255,120,0.14),
-      rgba(0,255,120,0.05)
-    );
-
-  border: 1px solid rgba(0,255,120,0.25);
-
-  color: #86efac;
-
-  font-size: 0.85rem;
-  font-weight: 800;
-
-  letter-spacing: 1px;
-
-  box-shadow:
-    0 0 25px rgba(0,255,120,0.08);
-}
-
-.removeBtn {
-  margin-top: 14px;
-
-  width: 100%;
-  height: 42px;
-
-  border: none;
-  outline: none;
-
-  border-radius: 14px;
-
-  cursor: pointer;
-
-  background:
-    linear-gradient(
-      180deg,
-      rgba(255,0,0,0.22),
-      rgba(255,0,0,0.08)
-    );
-
-  border: 1px solid rgba(255,0,0,0.3);
-
-  color: white;
-
-  font-size: 0.8rem;
-  font-weight: 900;
-
-  letter-spacing: 1px;
-
-  transition: 0.3s;
-}
-
-.removeBtn:hover {
-  transform: translateY(-2px);
-
-  box-shadow:
-    0 0 25px rgba(255,0,0,0.28);
 }
 
 /* MOBILE */
