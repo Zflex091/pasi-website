@@ -11,9 +11,9 @@ import {
 } from "firebase/firestore";
 
 import {
-  GoogleAuthProvider,
-  signInWithPopup,
+  signInWithEmailAndPassword,
   onAuthStateChanged,
+  signOut,
 } from "firebase/auth";
 
 import {
@@ -23,14 +23,22 @@ import {
 
 export default function AdminPage() {
 
-  const [user, setUser] =
-  useState<any>(null);
+ 
 
   const [players, setPlayers] =
     useState<any[]>([]);
 
   const [saving, setSaving] =
     useState(false);
+
+    const [user, setUser] =
+  useState<any>(null);
+
+const [email, setEmail] =
+  useState("");
+
+const [password, setPassword] =
+  useState("");
 
   const [heroTitle, setHeroTitle] =
     useState("");
@@ -44,23 +52,20 @@ export default function AdminPage() {
   ] = useState("");
 
 useEffect(() => {
+  loadPlayers();
+  loadTexts();
+
   const unsub =
     onAuthStateChanged(
       auth,
-      (u) => {
-        if (u) {
-          setUser(u);
-
-          loadPlayers();
-          loadTexts();
-        } else {
-          setUser(null);
-        }
+      (currentUser) => {
+        setUser(currentUser);
       }
     );
 
   return () => unsub();
 }, []);
+
 
 async function loadTexts() {
   const snap = await getDoc(
@@ -155,42 +160,93 @@ async function saveAll() {
 
   setSaving(false);
 }
+async function login() {
+  try {
+    await signInWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
+  } catch (err) {
+    alert(
+      "Wrong email or password"
+    );
+  }
+}
 
+async function logout() {
+  await signOut(auth);
+}
 if (!user) {
-  return (
-    <main
-      style={{
-        minHeight: "100vh",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        background: "#020617",
-      }}
-    >
-      <button
-        onClick={async () => {
-          const provider =
-            new GoogleAuthProvider();
 
-          await signInWithPopup(
-            auth,
-            provider
-          );
-        }}
-        style={{
-          height: "70px",
-          padding: "0 40px",
-          borderRadius: "20px",
-          border: "none",
-          background: "#00cfff",
-          color: "white",
-          fontWeight: 900,
-          fontSize: "1rem",
-          cursor: "pointer",
-        }}
-      >
-        LOGIN WITH GOOGLE
-      </button>
+  async function login() {
+  try {
+    await signInWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
+  } catch (err) {
+    alert(
+      "Wrong email or password"
+    );
+  }
+}
+
+async function logout() {
+  await signOut(auth);
+}
+  return (
+    <main className="adminPage">
+      <div className="container">
+
+        <div className="settingsCard">
+
+          <h1>
+            ADMIN LOGIN
+          </h1>
+
+          <div className="inputGroup">
+            <label>
+              EMAIL
+            </label>
+
+            <input
+              value={email}
+              onChange={(e) =>
+                setEmail(
+                  e.target.value
+                )
+              }
+            />
+          </div>
+
+          <div className="inputGroup">
+            <label>
+              PASSWORD
+            </label>
+
+            <input
+              type="password"
+              value={password}
+              onChange={(e) =>
+                setPassword(
+                  e.target.value
+                )
+              }
+            />
+          </div>
+
+          <button
+            className="saveBtn"
+            onClick={login}
+          >
+            LOGIN
+          </button>
+
+        </div>
+
+      </div>
     </main>
   );
 }
@@ -221,6 +277,12 @@ if (!user) {
               ? "SAVING..."
               : "SAVE ALL"}
           </button>
+          <button
+  onClick={logout}
+  className="saveBtn"
+>
+  LOGOUT
+</button>
         </div>
 <div className="settingsCard">
 
