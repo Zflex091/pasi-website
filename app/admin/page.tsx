@@ -10,9 +10,22 @@ import {
   getDoc,
 } from "firebase/firestore";
 
-import { db } from "../lib/firebase";
+import {
+  GoogleAuthProvider,
+  signInWithPopup,
+  onAuthStateChanged,
+} from "firebase/auth";
+
+import {
+  db,
+  auth,
+} from "../lib/firebase";
 
 export default function AdminPage() {
+
+  const [user, setUser] =
+  useState<any>(null);
+
   const [players, setPlayers] =
     useState<any[]>([]);
 
@@ -31,8 +44,22 @@ export default function AdminPage() {
   ] = useState("");
 
 useEffect(() => {
-  loadPlayers();
-  loadTexts();
+  const unsub =
+    onAuthStateChanged(
+      auth,
+      (u) => {
+        if (u) {
+          setUser(u);
+
+          loadPlayers();
+          loadTexts();
+        } else {
+          setUser(null);
+        }
+      }
+    );
+
+  return () => unsub();
 }, []);
 
 async function loadTexts() {
@@ -127,6 +154,45 @@ async function saveAll() {
   }
 
   setSaving(false);
+}
+
+if (!user) {
+  return (
+    <main
+      style={{
+        minHeight: "100vh",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        background: "#020617",
+      }}
+    >
+      <button
+        onClick={async () => {
+          const provider =
+            new GoogleAuthProvider();
+
+          await signInWithPopup(
+            auth,
+            provider
+          );
+        }}
+        style={{
+          height: "70px",
+          padding: "0 40px",
+          borderRadius: "20px",
+          border: "none",
+          background: "#00cfff",
+          color: "white",
+          fontWeight: 900,
+          fontSize: "1rem",
+          cursor: "pointer",
+        }}
+      >
+        LOGIN WITH GOOGLE
+      </button>
+    </main>
+  );
 }
 
   return (
